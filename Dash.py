@@ -12,11 +12,11 @@ from deepface import DeepFace
 #Adding container for Video Play box in the centre 
 
 #add video playback aligned in the centre
-#image = camera_input_live()
-#st.image(30)
-#webrtc_streamer(key="test")
+image = camera_input_live()
+st.image(30)
+webrtc_streamer(key="test")
 
-#gaze = GazeTracking()
+gaze = GazeTracking()
 
 backend = [ 
     'opencv',
@@ -34,17 +34,17 @@ class ProcessedVideo:
         vframe = frame.to_ndarray(format="bgr24")
         
         objs = DeepFace.analyze(img_path=vframe,actions=['emotion'])
-        #while True:
-            #gaze.refresh(vframe)
-           # new_frame = gaze.annotated_frame()
-           # text = ""
+        while True:
+            gaze.refresh(vframe)
+            new_frame = gaze.annotated_frame()
+            text = ""
 
-           # if gaze.is_right():
-             #   text = "Right"
-           # elif gaze.is_left():
-           #     text = "Left"
-           # elif gaze.is_center():
-           #     text = "Center"
+            if gaze.is_right():
+                text = "Right"
+            elif gaze.is_left():
+                text = "Left"
+            elif gaze.is_center():
+                text = "Center"
         return av.VideoFormat.from_ndarray(vframe ,format="bgr24")
 
 
