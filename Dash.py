@@ -17,6 +17,7 @@ b.title("Hive Monitor")
 
 #Putting a divider in between the Header and the rest of the page
 st.divider()
+st.write("")
 
 #creating columns to add individual features on that part of the UI
 features, camera_in, selector = st.columns([0.2, 0.6, 0.2])
@@ -27,6 +28,29 @@ options = features.multiselect(
     ["Face Detection", "Eye Tracking", "Emotion Detection"] 
 )
 
+#creating a multiselect for all the students available options
+options = selector.multiselect(
+    "Select student(s) :",
+    ["Hazim", "Elon", "Bill"] 
+)
+
+
+### For future reference to add a block a space
+selector.write("")
+selector.write("")
+selector.write("")
+selector.write("")
+selector.write("")
+selector.write("")
+selector.write("")  
+###
+
+
+#creating a multiselect for all the attribute description
+options = selector.multiselect(
+    "Select attribute :",
+    ["Face", "Eye", "Description"] 
+)
 
 #adding sidebar to the page
 st.sidebar.success("Pages")
