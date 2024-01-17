@@ -1,6 +1,10 @@
 import deepface
 from deepface import DeepFace
 import streamlit as st
+import cv2
+from retinaface import RetinaFace
+
+from Utilities.EyeTracking import *
 
 #setting up the page icon and page layout
 st.set_page_config(
@@ -51,6 +55,16 @@ options = selector.multiselect(
     "Select attribute :",
     ["Face", "Eye", "Description"] 
 )
+
+# ------ Camera Operations ------
+img_file_buffer = st.camera_input("Take a picture")
+
+resp, objs = image_processing(img_file_buffer)
+st.write(resp)
+st.write("---")
+st.write(objs)
+# -----
+
 
 #adding sidebar to the page
 st.sidebar.success("Pages")
