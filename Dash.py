@@ -12,6 +12,6 @@ st.set_page_config(
 #providing title for the page
 st.title("Hive-Monitor")
 #adding sidebar to the page
-st.sidebar.success("Select a page above.")
+st.sidebar.success("Pages")
 
-DeepFace.stream("pages/FaceData","VGG-Face","opencv","euclidean_l2")
+#DeepFace.stream("pages/FaceData","VGG-Face","opencv","euclidean_l2")
