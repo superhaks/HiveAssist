@@ -5,6 +5,7 @@ import cv2
 from retinaface import RetinaFace
 
 from Utilities.EyeTracking import *
+from Utilities.ExtractFaceFeatures import *
 
 #setting up the page icon and page layout
 st.set_page_config(
@@ -27,15 +28,20 @@ st.write("")
 features, camera_in, selector = st.columns([0.2, 0.6, 0.2])
 
 #creating a multiselect for all the feature options available options
-options = features.multiselect(
+options = ["Face Detection", "Eye Tracking", "Emotion Detection"]
+selected_options = features.multiselect(
     "Select the features you want to enable :",
-    ["Face Detection", "Eye Tracking", "Emotion Detection"] 
+    options
 )
 
+#checking if the selected options are selected or not
+#features.write(selected_options)
+
 #creating a multiselect for all the students available options
-options = selector.multiselect(
+students = ["Hazim", "Elon", "Bill"]
+selected_students = selector.multiselect(
     "Select student(s) :",
-    ["Hazim", "Elon", "Bill"] 
+    students
 )
 
 
@@ -51,18 +57,61 @@ selector.write("")
 
 
 #creating a multiselect for all the attribute description
-options = selector.multiselect(
+attributes = ["Face", "Eye", "Description"]
+selected_attributes = selector.multiselect(
     "Select attribute :",
-    ["Face", "Eye", "Description"] 
+    attributes
 )
 
-# ------ Camera Operations ------
-img_file_buffer = st.camera_input("Take a picture")
+# run = True
+# FRAME_WINDOW = camera_in.image([])
+# camera = cv2.VideoCapture(0)
 
-resp, objs = image_processing(img_file_buffer)
-st.write(resp)
-st.write("---")
-st.write(objs)
+# while run:
+#     _, frame = camera.read()
+#     frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
+#     FRAME_WINDOW.image(frame)
+# else:
+#     camera_in.write('Stopped')
+
+
+
+# ------ Camera Operations ------
+img_file_buffer = camera_in.camera_input("")
+
+#getting Processed features into variables
+m_face, m_left_eye, m_right_eye, m_dominant_emotion = image_processing(img_file_buffer)
+
+
+if selected_options == (["Eye Tracking"]):
+    camera_in.write(f"Co-ordinates for Left eye: {m_left_eye}, Right eye: {m_right_eye}")
+
+elif selected_options == (["Face Detection"]):
+    camera_in.write(f"Co-ordinates of Face: {m_face}")
+
+elif selected_options == (["Emotion Detection"]):
+    camera_in.write(f"Dominant Emotion : {m_dominant_emotion}" )
+
+elif selected_options == (["Eye Tracking"]) and selected_options == (["Emotion Detection"]):
+    camera_in.write(f"Co-ordinates for Left eye: {m_left_eye}, Right eye: {m_right_eye}")
+    camera_in.write(f"Dominant Emotion : {m_dominant_emotion}" )
+
+elif selected_options == (["Eye Tracking", "Face Detection"]):
+     camera_in.write(f"Co-ordinates for Left eye: {m_left_eye}, Right eye: {m_right_eye}")
+     camera_in.write(f"Co-ordinates of Face: {m_face}")
+
+elif selected_options == (["Emotion Detection", "Face Detection"]):
+    camera_in.write(f"Dominant Emotion : {m_dominant_emotion}" )
+    camera_in.write(f"Co-ordinates of Face: {m_face}")
+
+
+
+
+    
+    
+# camera_in.write(resp)
+# camera_in.write("---")
+# camera_in.write(objs)
 # -----
 
 

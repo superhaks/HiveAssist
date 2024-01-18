@@ -2,6 +2,8 @@ from deepface import DeepFace
 from retinaface import RetinaFace
 import cv2
 import numpy as np
+from Utilities.ExtractFaceFeatures import *
+from Utilities.ExtractEmotion import *
 
 def image_processing(img_file_buffer):
 
@@ -20,7 +22,16 @@ def image_processing(img_file_buffer):
     faces = RetinaFace.detect_faces(cv2_img)
     objs = DeepFace.analyze(img_path=cv2_img, actions=['emotion'], detector_backend ="opencv")
 
-    return faces, objs
+    #sending face data to obtain face, right eye and left eye coordinates
+    facial, rey, ley = ret_features(faces)
+
+    #sending emotion data to obtain dominant emotion
+    dominant = ret_emotion(objs)
+
+
+    return facial, rey, ley, dominant
+    # return score, right_eye, left_eye 
+
 
 
 """
@@ -112,5 +123,7 @@ def image_processing(img_file_buffer):
   }
 ]
 """
+
+
 def value_Extractor(faces, objs):
   return faces, objs
