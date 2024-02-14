@@ -20,7 +20,7 @@ def image_processing(img_file_buffer):
     # Should output shape: (height, width, channels)
     # st.write(cv2_img.shape)
     faces = RetinaFace.detect_faces(cv2_img)
-    objs = DeepFace.analyze(img_path=cv2_img, actions=['emotion'], detector_backend ="opencv")
+    objs = DeepFace.analyze(img_path=cv2_img, actions=['emotion'], detector_backend ="ssd")
 
     #sending face data to obtain face, right eye and left eye coordinates
     facial, rey, ley = ret_features(faces)

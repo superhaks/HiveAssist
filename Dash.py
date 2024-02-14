@@ -34,6 +34,13 @@ selected_options = features.multiselect(
     options
 )
 
+#making emotions multiselect
+emotions = ["Happy", "Sad", "Neutral", "Shocked"]
+selected_emotions = features.multiselect(
+    "Select the emotions you want to enable :",
+    emotions
+)
+
 #checking if the selected options are selected or not
 #features.write(selected_options)
 
@@ -82,30 +89,51 @@ img_file_buffer = camera_in.camera_input("")
 #getting Processed features into variables
 m_face, m_left_eye, m_right_eye, m_dominant_emotion = image_processing(img_file_buffer)
 
+#features.write(selected_options)
 
-if selected_options == (["Eye Tracking"]):
+# if selected_options == (["Eye Tracking"]):
+#     camera_in.write(f"Co-ordinates for Left eye: {m_left_eye}, Right eye: {m_right_eye}")
+
+# if selected_options == (["Face Detection"]):
+#     camera_in.write(f"Co-ordinates of Face: {m_face}")
+
+# if selected_options == (["Emotion Detection"]):
+#     camera_in.write(f"Dominant Emotion : {m_dominant_emotion}" )
+
+# if selected_options == (["Eye Tracking","Emotion Detection"]) or selected_options == (["Emotion Detection", "Eye Tracking"]):
+#     camera_in.write(f"Co-ordinates for Left eye: {m_left_eye}, Right eye: {m_right_eye}")
+#     camera_in.write(f"Dominant Emotion : {m_dominant_emotion}" )
+
+# if selected_options == (["Eye Tracking", "Face Detection"]) or selected_options == (["Face Detection", "Eye Tracking"]):
+#      camera_in.write(f"Co-ordinates for Left eye: {m_left_eye}, Right eye: {m_right_eye}")
+#      camera_in.write(f"Co-ordinates of Face: {m_face}")
+
+# if selected_options == (["Emotion Detection", "Face Detection"]) or selected_options == (["Face Detection", "Emotion Detection"]):
+#     camera_in.write(f"Dominant Emotion : {m_dominant_emotion}" )
+#     camera_in.write(f"Co-ordinates of Face: {m_face}")
+
+# if selected_options == (["Emotion Detection", "Face Detection", "Eye Tracking"]) or selected_options == (["Eye Tracking", "Face Detection", "Emotion Detection"]) or selected_options == (["Emotion Detection", "Eye Tracking", "Face Detection" ]) or selected_options == (["Eye Tracking", "Emotion Detection", "Face Detection"]) or selected_options == (["Face Detection", "Emotion Detection", "Eye Tracking"]) or selected_options == (["Face Detection", "Eye Tracking", "Emotion Detection"]):
+#     camera_in.write(f"Dominant Emotion : {m_dominant_emotion}" )
+#     camera_in.write(f"Co-ordinates of Face: {m_face}")
+#     camera_in.write(f"Co-ordinates for Left eye: {m_left_eye}, Right eye: {m_right_eye}")
+
+def display_eye_tracking_info():
     camera_in.write(f"Co-ordinates for Left eye: {m_left_eye}, Right eye: {m_right_eye}")
 
-elif selected_options == (["Face Detection"]):
+def display_face_detection_info():
     camera_in.write(f"Co-ordinates of Face: {m_face}")
 
-elif selected_options == (["Emotion Detection"]):
-    camera_in.write(f"Dominant Emotion : {m_dominant_emotion}" )
+def display_emotion_detection_info():
+    camera_in.write(f"Dominant Emotion : {m_dominant_emotion}")
 
-elif selected_options == (["Eye Tracking"]) and selected_options == (["Emotion Detection"]):
-    camera_in.write(f"Co-ordinates for Left eye: {m_left_eye}, Right eye: {m_right_eye}")
-    camera_in.write(f"Dominant Emotion : {m_dominant_emotion}" )
-
-elif selected_options == (["Eye Tracking", "Face Detection"]):
-     camera_in.write(f"Co-ordinates for Left eye: {m_left_eye}, Right eye: {m_right_eye}")
-     camera_in.write(f"Co-ordinates of Face: {m_face}")
-
-elif selected_options == (["Emotion Detection", "Face Detection"]):
-    camera_in.write(f"Dominant Emotion : {m_dominant_emotion}" )
-    camera_in.write(f"Co-ordinates of Face: {m_face}")
-
-
-
+# Display selected features
+for selected_option in selected_options:
+    if selected_option == "Eye Tracking":
+        display_eye_tracking_info()
+    elif selected_option == "Face Detection":
+        display_face_detection_info()
+    elif selected_option == "Emotion Detection":
+        display_emotion_detection_info()
 
     
     
