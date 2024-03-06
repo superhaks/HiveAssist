@@ -89,6 +89,9 @@ img_file_buffer = camera_in.camera_input("")
 #getting Processed features into variables
 m_face, m_left_eye, m_right_eye, m_dominant_emotion = image_processing(img_file_buffer)
 
+#cascaded output
+camera_in.camera_output("")
+
 #features.write(selected_options)
 
 # if selected_options == (["Eye Tracking"]):
