@@ -1,50 +1,40 @@
+import cv2
 import streamlit as st
-# import cv2 
-# import numpy as np
-# import camera_input_live 
-
-
+import numpy as np
 from deepface import DeepFace
-DeepFace.stream("HiveAssist/OldFiles/FaceData")
+import streamlit as st
+import cv2
+from retinaface import RetinaFace
+from HiveAssist.Utilities.ExtractEmotion import *
+from HiveAssist.Utilities.ExtractFaceFeatures import *
 
 
-# # setting up the page icon
-# st.set_page_config(
-#     page_title = "HiveAssist",
-#     page_icon = ":honeybee:"
-# )
+st.title("Webcam Live Feed")
+run = st.checkbox('Run')
+FRAME_WINDOW = st.image([])
+camera = cv2.VideoCapture(0)
 
-# # providing title for the page
-# st.title("Dashboard")
+while run:
+    ret, frame_np = camera.read()  # Read frame
+    
+    if ret:
+        try:
+            frame_np = cv2.cvtColor(frame_np, cv2.COLOR_BGR2RGB)  # Convert color space
+            FRAME_WINDOW.image(frame_np)            # Display the frame
+            faces = RetinaFace.detect_faces(frame_np)
+            objs = DeepFace.analyze(img_path=frame_np, actions=['emotion'], detector_backend ="ssd", enforce_detection= False)
+            facial, rey, ley = ret_features(faces)
+            dominant = ret_emotion(objs)
+        except Exception as e:
+            st.error(f"Error processing frame: {str(e)}")
+    else:
+        st.error("Failed to capture frame.")
+    
+    if not run:
+        break
 
-# # adding sidebar to the page
-# st.sidebar.success("Select a page above.")
+# Release the webcam when done
+camera.release()
+st.write('Stopped')
 
-# #img_file_buffer = 
-# #st.camera_input("Webcam",key="Web",label_visibility="collapsed")
 
-# st.title("Webcam Live Feed")
-# run = True
-# FRAME_WINDOW = st.image([])
-# camera = cv2.VideoCapture(0)
-
-# while run:
-#     _, frame = camera.read()
-#     frame = cv2.cvtColor(frame, cv2.COLOR_BGR2RGB)
-#     FRAME_WINDOW.image(frame)
-# else:
-#     st.write('Stopped')
-
-# #image = camera_input_live()
-
-# # if image is not None:
-# #     st.image()
-# #     bytes_data = image.getvalue()
-# #     cv2_img = cv2.imdecode(np.frombuffer(bytes_data, np.uint8), cv2.IMREAD_COLOR)
-
-# # if img_file_buffer is not None:
-# #     # To read image file buffer with OpenCV:
-# #     bytes_data = img_file_buffer.getvalue()
-# #     cv2_img = cv2.imdecode(np.frombuffer(bytes_data, np.uint8), cv2.IMREAD_COLOR)
-
- 
